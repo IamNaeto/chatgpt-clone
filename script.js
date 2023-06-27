@@ -2,7 +2,8 @@ const chatInput = document.querySelector('#chat-input')
 const sendButton = document.querySelector('#send-btn')
 const chatContainer = document.querySelector('.chat-container')
 
-let userText = null
+let userText = null;
+const oops = "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";
 
 const createElement = (html, className) =>{
     //Create new div and apply chat, specified class and set html content of div
@@ -10,6 +11,38 @@ const createElement = (html, className) =>{
     chatDiv.classList.add("chat", className);
     chatDiv.innerHTML = html;
     return chatDiv; //Return the created chat div
+}
+
+const getChatResponse = async (incomingChatDiv) =>{
+    const API_URL = "https://api.openai.com/v1/completions";
+    const pElement = document.createElement("p");
+
+    // Define the properties and data for the API request
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${oops}`
+        },
+        body: JSON.stringify({
+            model : "text-davinci-003",
+            prompt : userText,
+            max_tokens : 2048,
+            temperature : 0.2,
+            n : 1,
+            stop : null
+        })
+    }
+    // Send Post request to API, get response and set the reponse as paragraph element text
+    try{
+        const response = await (await fetch(API_URL, requestOptions)).json();
+        pElement.textContent = response.choices[0].text.trim();
+    }catch(error){
+        console.log(error);
+    }
+
+    incomingChatDiv.querySelector(".typing-animation").remove();
+    incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
 }
 
 const showTypingAnimation = () =>{
@@ -25,9 +58,10 @@ const showTypingAnimation = () =>{
     <span class="material-symbols-rounded">content_copy</span>
     </div>`
 
-    //Create an outgoing chat div with user's message and append it to chat container
-    const outgoingChatDiv = createElement(html, "incoming");
-    chatContainer.appendChild(outgoingChatDiv);
+    //Create an incoming chat div with user's message and append it to chat container
+    const incomingChatDiv = createElement(html, "incoming");
+    chatContainer.appendChild(incomingChatDiv);
+    getChatResponse(incomingChatDiv);
 }
 
 const handleOutgoingChat = () =>{
