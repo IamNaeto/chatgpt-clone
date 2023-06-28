@@ -14,6 +14,7 @@ const loadDataFromLocalStorage = () =>{
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
 
     chatContainer.innerHTML = localStorage.getItem("all-chats");
+    chatContainer.scrollTo(0, chatContainer.scrollHeight);
 }
 loadDataFromLocalStorage()
 
@@ -56,6 +57,7 @@ const getChatResponse = async (incomingChatDiv) =>{
     // Removing the typing animation, append the paragraph element and save the chats to local storage
     incomingChatDiv.querySelector(".typing-animation").remove();
     incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
+    chatContainer.scrollTo(0, chatContainer.scrollHeight);
     localStorage.setItem("all-chats", chatContainer.innerHTML);
 }
 
@@ -82,6 +84,7 @@ const showTypingAnimation = () =>{
     //Create an incoming chat div with user's message and append it to chat container
     const incomingChatDiv = createElement(html, "incoming");
     chatContainer.appendChild(incomingChatDiv);
+    chatContainer.scrollTo(0, chatContainer.scrollHeight);
     getChatResponse(incomingChatDiv);
 }
 
@@ -101,6 +104,7 @@ const handleOutgoingChat = () =>{
 const outgoingChatDiv = createElement(html, "outgoing");
 outgoingChatDiv.querySelector("p").textContent = userText;
 chatContainer.appendChild(outgoingChatDiv);
+chatContainer.scrollTo(0, chatContainer.scrollHeight);
 setTimeout(showTypingAnimation, 500);
 }
 
