@@ -1,10 +1,12 @@
 const chatInput = document.querySelector('#chat-input')
 const sendButton = document.querySelector('#send-btn')
 const chatContainer = document.querySelector('.chat-container')
+const themeButton = document.querySelector('#theme-btn')
 
 let userText = null;
 const oops = "";
 
+// load and show the saved chats on the page from the local storage
 const loadDataFromLocalStorage = () =>{
     chatContainer.innerHTML = localStorage.getItem("all-chats");
 }
@@ -96,5 +98,11 @@ outgoingChatDiv.querySelector("p").textContent = userText;
 chatContainer.appendChild(outgoingChatDiv);
 setTimeout(showTypingAnimation, 500);
 }
+
+themeButton.addEventListener("click", () =>{
+    // Toggle body's class for the theme mode
+    document.body.classList.toggle("light-mode")
+    themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
+});
 
 sendButton.addEventListener("click", handleOutgoingChat);
