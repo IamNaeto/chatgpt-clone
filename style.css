@@ -36,6 +36,25 @@ body{
     padding-bottom: 150px;
     overflow-y: auto;
 }
+.default-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 70vh;
+    padding: 0 10px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.default-text h1{
+    font-size: 3.3rem;
+}
+
+.default-text p{
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
 /* custom scroll bar */
 :where(.chat-container, textarea)::-webkit-scrollbar{
     width: 6px;
