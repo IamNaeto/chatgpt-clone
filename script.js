@@ -58,7 +58,8 @@ const getChatResponse = async (incomingChatDiv) =>{
         const response = await (await fetch(API_URL, requestOptions)).json();
         pElement.textContent = response.choices[0].text.trim();
     }catch(error){
-        console.log(error);
+        pElement.classList.add("error");
+        pElement.textContent = "Ooops! Something went wrong while retrieving the response. Please try again or contact Charles to know the cause of the problem";
     }
 
     // Removing the typing animation, append the paragraph element and save the chats to local storage
