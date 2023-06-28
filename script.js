@@ -5,7 +5,8 @@ const themeButton = document.querySelector('#theme-btn')
 const deleteButton = document.querySelector('#delete-btn')
 
 let userText = null;
-const oops = "";
+const API_KEY = "";
+const initialHeight = chatInput.scrollHeight;
 
 // load and show the saved chats on the page from the local storage
 const loadDataFromLocalStorage = () =>{
@@ -41,7 +42,7 @@ const getChatResponse = async (incomingChatDiv) =>{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${oops}`
+            "Authorization": `Bearer ${API_KEY}`
         },
         body: JSON.stringify({
             model : "text-davinci-003",
@@ -99,6 +100,10 @@ const handleOutgoingChat = () =>{
 
     if(!userText) return; //if chatInput is empty return from here
 
+    // Once a message is sent, make the textarea blank and set the height to the initial height
+    chatInput.value = ""
+    chatInput.style.height = `${initialHeight}px`;
+
     const html = `<div class="chat-content">
     <div class="chat-details">
         <img src="img/user.jpg" alt="user-img">
@@ -130,12 +135,18 @@ deleteButton.addEventListener("click", () => {
     }
 });
 
-const initialHeight = chatInput.scrollHeight;
-
 chatInput.addEventListener("input", () =>{
     // Adjust the height of the input field dynamically based on it's content
     chatInput.style.height = `${initialHeight}px`;
     chatInput.style.height = `${chatInput.scrollHeight}px`;
+});
+
+chatInput.addEventListener("keydown", (e) =>{
+    // If the Enter key is pressed without Shift and the window width is larger than 800 pixels, handle the outgoing chat
+    if(e.key === "Enter" && !e.shiftKey && window.innerWidth > 800){
+        e.preventDefault();
+        handleOutgoingChat();
+    }
 });
 
 sendButton.addEventListener("click", handleOutgoingChat);
