@@ -44,7 +44,13 @@ const getChatResponse = async (incomingChatDiv) =>{
     incomingChatDiv.querySelector(".typing-animation").remove();
     incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
 }
-
+const copyResponse = (copyBtn) =>{
+    // Copy the text content of the response to the clipboard
+    const responseTextElement = copyBtn.parentElement.querySelector("p");
+    navigator.clipboard.writeText(responseTextElement.textContent);
+    copyBtn.textContent = "done";
+    setTimeout(() => copyBtn.textContent = "content_copy", 1000);
+}
 const showTypingAnimation = () =>{
     const html =`<div class="chat-content">
     <div class="chat-details">
@@ -55,7 +61,7 @@ const showTypingAnimation = () =>{
             <div class="typing-dot" style="--delay: 0.4s"></div>
         </div>
     </div>
-    <span class="material-symbols-rounded">content_copy</span>
+    <span onclick="copyResponse(this)" class="material-symbols-rounded">content_copy</span>
     </div>`
 
     //Create an incoming chat div with user's message and append it to chat container
