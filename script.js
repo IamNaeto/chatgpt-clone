@@ -128,6 +128,14 @@ deleteButton.addEventListener("click", () => {
         localStorage.removeItem("all-chats");
         loadDataFromLocalStorage();
     }
-})
+});
+
+const initialHeight = chatInput.scrollHeight;
+
+chatInput.addEventListener("input", () =>{
+    // Adjust the height of the input field dynamically based on it's content
+    chatInput.style.height = `${initialHeight}px`;
+    chatInput.style.height = `${chatInput.scrollHeight}px`;
+});
 
 sendButton.addEventListener("click", handleOutgoingChat);
