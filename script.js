@@ -14,7 +14,12 @@ const loadDataFromLocalStorage = () =>{
     document.body.classList.toggle("light-mode", themeColor === "light_mode")
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
 
-    chatContainer.innerHTML = localStorage.getItem("all-chats");
+    const defaultText = `<div class="default-text">
+                            <h1>ChatGPT Clone</h1>
+                            <p>Start a conversation and explore the power of AI.<br> Your chat history will be displayed here.</p>
+                        </div>`
+
+    chatContainer.innerHTML = localStorage.getItem("all-chats") || defaultText;
     chatContainer.scrollTo(0, chatContainer.scrollHeight);
 }
 loadDataFromLocalStorage()
