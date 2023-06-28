@@ -3,7 +3,7 @@ const sendButton = document.querySelector('#send-btn')
 const chatContainer = document.querySelector('.chat-container')
 
 let userText = null;
-const oops = "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";
+const oops = "";
 
 const createElement = (html, className) =>{
     //Create new div and apply chat, specified class and set html content of div
@@ -66,15 +66,19 @@ const showTypingAnimation = () =>{
 
 const handleOutgoingChat = () =>{
     userText = chatInput.value.trim(); //Get chatinput value and remove extra spaces
+
+    if(!userText) return; //if chatInput is empty return from here
+
     const html = `<div class="chat-content">
     <div class="chat-details">
         <img src="img/user.jpg" alt="user-img">
-        <p>${userText}</p>
+        <p></p>
     </div>
 </div>`;
 
 // Create an outgoing chat div with user's message and append it to chat container
 const outgoingChatDiv = createElement(html, "outgoing");
+outgoingChatDiv.querySelector("p").textContent = userText;
 chatContainer.appendChild(outgoingChatDiv);
 setTimeout(showTypingAnimation, 500);
 }
