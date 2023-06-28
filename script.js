@@ -8,6 +8,11 @@ const oops = "";
 
 // load and show the saved chats on the page from the local storage
 const loadDataFromLocalStorage = () =>{
+    const themeColor = localStorage.getItem("theme-color");
+
+    document.body.classList.toggle("light-mode", themeColor === "light_mode")
+    themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
+
     chatContainer.innerHTML = localStorage.getItem("all-chats");
 }
 loadDataFromLocalStorage()
@@ -102,6 +107,7 @@ setTimeout(showTypingAnimation, 500);
 themeButton.addEventListener("click", () =>{
     // Toggle body's class for the theme mode
     document.body.classList.toggle("light-mode")
+    localStorage.setItem("theme-color", themeButton.innerText);
     themeButton.innerText = document.body.classList.contains("light-mode") ? "dark_mode" : "light_mode";
 });
 
