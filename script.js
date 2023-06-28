@@ -41,9 +41,12 @@ const getChatResponse = async (incomingChatDiv) =>{
         console.log(error);
     }
 
+    // Removing the typing animation, append the paragraph element and save the chats to local storage
     incomingChatDiv.querySelector(".typing-animation").remove();
     incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
+    localStorage.setItem("all-chats", chatContainer.innerHTML);
 }
+
 const copyResponse = (copyBtn) =>{
     // Copy the text content of the response to the clipboard
     const responseTextElement = copyBtn.parentElement.querySelector("p");
