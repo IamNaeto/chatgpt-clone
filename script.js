@@ -5,6 +5,11 @@ const chatContainer = document.querySelector('.chat-container')
 let userText = null;
 const oops = "";
 
+const loadDataFromLocalStorage = () =>{
+    chatContainer.innerHTML = localStorage.getItem("all-chats");
+}
+loadDataFromLocalStorage()
+
 const createElement = (html, className) =>{
     //Create new div and apply chat, specified class and set html content of div
     const chatDiv = document.createElement("div");
